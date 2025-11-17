@@ -25,7 +25,7 @@
 .wrap {
   position: relative;
   width: 90%;
-  margin: 5% auto;
+  margin: 20% auto;
 }
 .container {
   position: relative;
@@ -153,4 +153,5 @@
     background-color: #70d7e9;
     color:#be32ca
   
+
 }
