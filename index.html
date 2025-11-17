@@ -42,6 +42,8 @@
         <button onclick="location.reload()" id="resetBtn">もういちど</button>
 
      </div>
+    <audio id="mawasu" src="mawasu.mp3" preload="auto"></audio>
+    <audio id="deru" src="deru.mp3" preload="auto"></audio>
     <audio id="se" src="se.mp3" preload="auto"></audio>
 
 <script>
@@ -51,13 +53,19 @@
     let angle = 0;         // 現在の回転角度を保持
     let isAnimating = false; // アニメ中の連打防止フラグ
 
+    
+    const mawasu = document.getElementById("mawasu");
+    mawasu.volume = 0.3;
+    const deru = document.getElementById("deru");
+    deru.volume = 0.5;
+
     imghandle.addEventListener('click', () => {
         if (isAnimating) return; // アニメ中は無視
         isAnimating = true;
-        
+                
 
         // 景品の抽選
-        const num = Math.floor(Math.random() * 6) + 1; //個数を入力
+        const num = Math.floor(Math.random() * 3) + 1; //個数を入力
         const fileName = String(num).padStart(2, "0") + ".png";
         keihinimg.src = `image/keihin/${fileName}`;
 
@@ -70,6 +78,8 @@
         setTimeout(() => {
             angle += 90; // 90度ずつ右回転
             imghandle.style.transform = `rotate(${angle}deg)`;
+            mawasu.currentTime = 0;
+            mawasu.play();
 
             // 最後の回転が終わって0.5秒待ってからフラグ解除
             if (i === 3) {
@@ -78,6 +88,10 @@
                 document.getElementById("capsule").style.top = "150%"; // カプセル出る
                 opencapsule();
             }, 500); // 最後の「0.5秒停止」分
+            setTimeout(() => {
+                deru.currentTime = 0;
+                deru.play();
+            }, 900); 
             }
         }, (i - 1) * 1000); // 1秒ごと(=0.5秒回転+0.5秒停止)
         
@@ -90,7 +104,7 @@
             requestAnimationFrame(() =>{
                 modal.style.opacity ='1';
             });
-        }, 2000);
+        }, 1500);
     }
 
     // カプセル割る
