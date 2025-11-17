@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#white" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <title>はつガチャ</title>
+  <link rel="stylesheet" href="styles.css">
+
+<style>
+
+</style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="container">
+            <img src="image/ue.png" alt="上画像" class="img-ue">
+            <img src="image/handle.png" alt="ハンドル" class="handle" id="handle">
+        </div>
+
+        <!-- <img src="image/sita.png" alt="下画像" class="img-sita"> -->
+        <img src="image/capsule.png" alt="capsule" class="capsule" id ="capsule">
+    </div>
+    
+    <!-- オープン -->
+     <div class="modal" id="modal" style="display: none;">
+        <div class="close_capsule" id="closeCapsule">
+            <img src="image/capsule_ue.png" class="capsule_ue" id="capsuleUe">
+            <img src="image/capsule_sita.png" class="capsule_sita" id ="capsuleSita">
+        </div>
+        <div class="keihin">
+            <img src="image/keihin/01.png" class="keihin" id="keihinImg">
+        </div>
+        <button onclick="location.reload()" id="resetBtn">もういちど</button>
+
+     </div>
+    <audio id="se" src="se.mp3" preload="auto"></audio>
+
+<script>
+    const imghandle = document.getElementById('handle');
+    const keihinimg = document.getElementById("keihinImg");
+
+    let angle = 0;         // 現在の回転角度を保持
+    let isAnimating = false; // アニメ中の連打防止フラグ
+
+    imghandle.addEventListener('click', () => {
+        if (isAnimating) return; // アニメ中は無視
+        isAnimating = true;
+        
+
+        // 景品の抽選
+        const num = Math.floor(Math.random() * 2) + 1;
+        const fileName = String(num).padStart(2, "0") + ".png";
+        keihinimg.src = `image/keihin/${fileName}`;
+
+        // 3回繰り返す
+        for (let i = 1; i <= 3; i++) {
+        // (i-1)*1000msごとに1回ずつ回転を指示
+        // 0ms: 回転 → 0.5秒かけて動く → 0.5秒停止
+        // 1000ms: 2回目
+        // 2000ms: 3回目
+        setTimeout(() => {
+            angle += 90; // 90度ずつ右回転
+            imghandle.style.transform = `rotate(${angle}deg)`;
+
+            // 最後の回転が終わって0.5秒待ってからフラグ解除
+            if (i === 3) {
+            setTimeout(() => {
+                isAnimating = false;
+                document.getElementById("capsule").style.top = "150%"; // カプセル出る
+                opencapsule();
+            }, 500); // 最後の「0.5秒停止」分
+            }
+        }, (i - 1) * 1000); // 1秒ごと(=0.5秒回転+0.5秒停止)
+        
+        }
+    });
+
+    function opencapsule(){
+        setTimeout(() => {
+            modal.style.display ="block";
+            requestAnimationFrame(() =>{
+                modal.style.opacity ='1';
+            });
+        }, 2800);
+    }
+
+    // カプセル割る
+    const closeCapsule = document.getElementById("closeCapsule");
+    const capsuleUe = document.getElementById("capsuleUe");
+    const capsuleSita = document.getElementById("capsuleSita");
+    const modal = document.getElementById("modal");
+    const keihinBox = document.querySelector('.keihin');
+
+    closeCapsule.addEventListener('click', () => {
+        capsuleUe.classList.add('move-up');
+        capsuleSita.classList.add('move-down');
+        modal.classList.add("bg-img");
+        // 音を鳴らす
+        const se = document.getElementById("se");
+        se.volume = 0.5;
+        se.currentTime = 0; // 毎回先頭から
+        se.play();
+        setTimeout(() => {
+            keihinBox.classList.add("zoom");
+        }, 500);
+
+
+        // リセットボタンの表示
+        setTimeout(() => {
+            document.getElementById("resetBtn").style.display ="flex";
+        }, 3500);
+    });
+
+</script>
+</body>
+</html>
