@@ -1,0 +1,155 @@
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: rgb(255, 255, 255);
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: auto;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    * {
+  user-select: none;   /* テキスト選択禁止 */
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+/* コンテナは relative にして、handle を絶対配置できるようにする */
+.wrap {
+  position: relative;
+  width: 90%;
+  margin: 10% auto;
+}
+.container {
+  position: relative;
+  width: 100%;
+  z-index: 50;
+}
+
+/* 上の画像 */
+.img-ue {
+  width: 100%;
+  display: block;
+}
+
+/* 下の画像 */
+.img-sita {
+  width: 100%;
+  display: block;
+  z-index: 30;
+}
+
+/* handle を ue の上に重ねる */
+.handle {
+    position: absolute;
+    top: 73%;
+    left: 36%;
+    width: 20%; 
+    display: block;
+    transition: transform 0.5s linear;
+    z-index: 60;
+}
+.capsule {
+    position: absolute;
+    top: 70%;
+    left: 33%;
+    width: 20%; 
+    display: block;
+    z-index: 20;
+    transition: top 3s ease;  
+}
+
+.modal{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    z-index: 100;
+}
+.modal.bg-img {
+    background: url("image/modal.jpg") center/cover no-repeat;
+    opacity: 1;   /* 必要なら透過も調整可 */
+}
+.close_capsule{
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    flex-direction: column;
+    z-index: 200;
+}
+.close_capsule img{
+    display:block;
+    width: 100%;
+}
+
+.capsule_ue,
+.capsule_sita {
+    position: absolute;
+    display: flex;
+    position: relative; 
+    transition: transform 0.8s ease;
+}
+
+.capsule_sita {
+  margin-top:-22%;
+}
+/* 移動後の状態（JSでこのクラスを付ける） */
+.capsule_ue.move-up {
+    transform: translateY(-150px);   /* ←好きな距離に調整 */
+}
+
+.capsule_sita.move-down {
+    transform: translateY(150px);    /* ←好きな距離に調整 */
+}
+
+.keihin{
+    z-index: 150;
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.8s ease;
+    width: 60%;
+}
+#keihinImg {
+    /* transition: opacity 0.8s ease; */
+    display: block;
+    max-width: 100%;
+}
+
+/* 表示時（ズーム＋フェードイン） */
+.keihin.zoom {
+    transform: translate(-50%, -50%) scale(1.8); /* 同じく translate + scale セットで */
+}
+
+
+#resetBtn{
+  display: none;
+    z-index: 500;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    font-family: "Potta One";
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 20px;
+    border-color: rgb(253, 173, 229);
+    background-color: #70d7e9;
+    color:#be32ca
+  
+}
