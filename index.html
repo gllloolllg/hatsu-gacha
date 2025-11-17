@@ -57,7 +57,7 @@
         
 
         // 景品の抽選
-        const num = Math.floor(Math.random() * 2) + 1;
+        const num = Math.floor(Math.random() * 6) + 1; //個数を入力
         const fileName = String(num).padStart(2, "0") + ".png";
         keihinimg.src = `image/keihin/${fileName}`;
 
