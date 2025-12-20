@@ -4,7 +4,7 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      /* overflow: hidden; */
       background: #fff;
       /* overscroll-behavior: none;
       -webkit-overflow-scrolling: auto;
@@ -25,7 +25,7 @@
 .wrap {
   position: relative;
   width: 90%;
-  margin: 20% auto;
+  margin: 5% auto;
 }
 .container {
   position: relative;
@@ -49,9 +49,9 @@
 /* handle を ue の上に重ねる */
 .handle {
     position: absolute;
-    top: 73%;
-    left: 36%;
-    width: 20%; 
+    top: 81%;
+    left: 35%;
+    width: 18%; 
     display: block;
     transition: transform 0.5s linear;
     z-index: 60;
@@ -153,6 +153,4 @@
     background-color: #70d7e9;
     color:#be32ca
   
-
 }
-
